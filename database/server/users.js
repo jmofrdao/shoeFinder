@@ -50,7 +50,7 @@ router.post('/register', async(req,res,next)=> {
 
 
 router.post('/login', async (req,res,next)=> {
-const {username, password} = req.body
+const {username, password} = req.body.user
 
 if (!username || !password) {
     next({

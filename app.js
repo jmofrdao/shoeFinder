@@ -20,7 +20,7 @@ app.use((req, res, next) => {
     next();
   });
 
-const router = require('./server/api')
+const router = require('./database/server')
 app.use('/api', router)
 
 app.use(express.static(path.join(__dirname, 'build')));

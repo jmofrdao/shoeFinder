@@ -28,4 +28,11 @@ router.use(async(req,res,next)=> {
     }
 })
 
+const usersRouter = require('./users')
+router.use('/users', usersRouter)
 
+const shoesRouter = require('./shoes')
+router.use('/shoes', shoesRouter)
+
+
+module.exports = router
