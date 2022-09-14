@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { Routes,Route } from 'react-router-dom'
-import {Login, Header, Home} from './index'
+import {Login, Header, Home, Register} from './index'
+
 
 const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -26,6 +27,9 @@ const App = () => {
             path='/login'
             element={
             <Login setIsLoggedIn={setIsLoggedIn}/>}/>
+            <Route 
+            path='/register' 
+            element={<Register/>}/>
             </Routes>
         </div>
     )

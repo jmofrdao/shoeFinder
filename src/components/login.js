@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { LoginUser } from '../api'
-
+import { NavLink } from 'react-router-dom'
 const Login = ({setIsLoggedIn}) => {
 const [username, setUsername] = useState('')
 const [password, setPassword] = useState('')
@@ -36,6 +36,7 @@ console.log(password, 'pass')
         </label>
         <button type='submit'>Log In</button>
     </form>
+    <NavLink to='/register'>Click here to Register</NavLink>
 </div>
     )
 }
