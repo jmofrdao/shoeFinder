@@ -19,7 +19,8 @@ async function createTables () {
     CREATE TABLE users (
         id SERIAL PRIMARY KEY,
         username VARCHAR(255) UNIQUE NOT NULL,
-        password VARCHAR(255) NOT NULL
+        password VARCHAR(255) NOT NULL,
+        email VARCHAR(255) NOT NULL
     );
     CREATE TABLE shoes (
         id SERIAL PRIMARY KEY,
@@ -37,9 +38,9 @@ async function createTables () {
 async function createInitialUser () {
     try {
         const usersToCreate = [
-          { username: "albert", password: "bertie99" },
-          { username: "sandra", password: "sandra123" },
-          { username: "glamgal", password: "glamgal123" },
+          { username: "albert", password: "bertie99", email: 'bertie@gmail.com' },
+          { username: "sandra", password: "sandra123", email: 'sandra@gmail.com' },
+          { username: "glamgal", password: "glamgal123", email: 'glamgal@gnail.com' },
         ];
         const users = await Promise.all(usersToCreate.map(createUser));
     

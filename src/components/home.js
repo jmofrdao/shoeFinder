@@ -32,10 +32,10 @@ const Home = ({shoes, setShoes}) => {
         })
 
     } else {
-
+console.log(shoes, 'ha')
     shoeMap = shoes.map((shoe, index)=> {
         return (
-            <div key={`Shoe ${index}`}>
+            <div key={`Sho ${index}`}>
                 <h1>Name: {shoe.name}</h1>
                 <h3>Brand: {shoe.brand}</h3>
                 <h5>State: {shoe.state}</h5>
@@ -46,7 +46,7 @@ const Home = ({shoes, setShoes}) => {
         )
     })
 }
-
+console.log(shoes, 'shoes')
     return (
         <div>
             <Search shoes={shoes} filteredShoes={filteredShoes} setFilteredShoes={setFilteredShoes}/>

@@ -5,8 +5,8 @@ const {JWT_SECRET} = process.env
 const {getUser, getUserByUsername, createUser} = require('../db/users')
 
 router.post('/register', async(req,res,next)=> {
-    const {username, password} = req.body
-    if (!username || password) {
+    const {username, password, secondPass, email} = req.body
+    if (!username || !password) {
         next({
             name: 'MissingCredentialsError',
             message: 'Please supply both username and pasword'
@@ -24,10 +24,18 @@ router.post('/register', async(req,res,next)=> {
                 name: 'PasswordLengthError',
                 message: 'Password must be longer than 8 characters'
             })
-        } else {
+        } else if (password !== secondPass) {
+            next({
+                name:'PasswordVerificationError',
+                message: 'Passwords do not match'
+            })
+        }
+        
+        else {
             const user = await createUser({
                 username, 
-                password
+                password,
+                email
             })
             if (user) {
                 const token = jwt.sign({
