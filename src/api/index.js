@@ -53,3 +53,26 @@ export const registerUser = async (username, password, email, secondPass) => {
     console.log(result, 'result')
       return result;
 }
+
+export async function getUsersMe(token) {
+    const response = await fetch(`${BASE_URL}/users/me`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = await response.json();
+    console.log(result)
+    return result;
+  }
+
+export const getShoesbyUsername = async (username) => {
+        const response = await fetch(`${BASE_URL}/users/${username}/shoes`, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+const result = await response.json()
+console.log(result, 'get shoes by user')
+return result
+}

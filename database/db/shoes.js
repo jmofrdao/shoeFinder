@@ -45,7 +45,26 @@ async function getAllShoes() {
     }
 }
 
+async function getShoesByUsername (username) {
+try {
+    const {rows: shoes} = await client.query(`
+    SELECT shoes.*, users.username AS "creatorName"
+    FROM shoes
+    JOIN users ON shoes."creatorId" = users.id
+    WHERE username = $1
+    `, [username])
+    if (!shoes) {
+        return null
+    } else {
+        return shoes
+    }
+} catch (error) {
+    throw error
+}
+}
+
 module.exports = {
     createShoes,
-    getAllShoes
+    getAllShoes,
+    getShoesByUsername
 }

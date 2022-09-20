@@ -47,8 +47,25 @@ return user
         throw error
     }
 }
+
+async function getUserById (id) {
+    try {
+        const {rows: [user]} = await client.query(`
+        SELECT id, username
+        FROM users
+        WHERE id=${id}
+        `)
+        if (!user) {
+            return null
+        }
+        return user
+    } catch (error) {
+        throw error
+    }
+}
 module.exports = {
     createUser,
     getUser,
-    getUserByUsername
+    getUserByUsername,
+    getUserById
 }

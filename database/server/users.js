@@ -3,6 +3,8 @@ const router = express.Router()
 const jwt = require('jsonwebtoken')
 const {JWT_SECRET} = process.env
 const {getUser, getUserByUsername, createUser} = require('../db/users')
+const {getShoesByUsername} = require('../db/shoes')
+const { requireUser } = require('./utils')
 
 router.post('/register', async(req,res,next)=> {
     const {username, password, secondPass, email} = req.body
@@ -88,6 +90,32 @@ try {
     })
 }
 })
+
+router.get('/:username/shoes', async (req,res,next)=> {
+    const {username} = req.params
+    try {
+        const shoes = await getShoesByUsername(username)
+        if (shoes) {
+            res.send(shoes)
+        } else {
+            next({
+                name: 'noshoeserror',
+                message: 'You have no shoes at this time'
+            })
+        }
+    } catch({name, message}) {
+        next({name, message})
+    }
+})
+
+router.get("/me", requireUser, async (req, res, next) => {
+    try {
+        console.log(req.user, 'user')
+      res.send(req.user);
+    } catch (error) {
+      next(error);
+    }
+  });
 
 
 module.exports = router
