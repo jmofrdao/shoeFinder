@@ -17,7 +17,7 @@ let navigate = useNavigate()
             <div>
             <NavLink to='/'>Shoes</NavLink>
             
-            <NavLink to='/myshoes'>My Shoes</NavLink>
+            <NavLink to='/myshoes'>Profile</NavLink>
             <button onClick={handleLogout}>Logout</button>
             </div>
             :

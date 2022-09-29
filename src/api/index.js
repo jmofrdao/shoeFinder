@@ -76,3 +76,37 @@ const result = await response.json()
 console.log(result, 'get shoes by user')
 return result
 }
+
+export const createMessage = async (token, shoeId, fromUser, typedMessage) => {
+const response = await fetch(`${BASE_URL}/shoes/${shoeId}/${fromUser}/messages`, {
+    method:"POST",
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify({
+        message:{
+            content: `${typedMessage}`
+        }          
+    })   
+})
+const result = await response.json()
+console.log(result, 'message')
+return result
+}
+
+export const getUserMessage = async (fromUser) => {
+    try {
+        const response = await fetch(`${BASE_URL}/users/${fromUser}/messages`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        })
+        const result = await response.json()
+        console.log(result, 'messageUser')
+        return result
+    } catch (error) {
+        console.log(error)
+    }
+}

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { Routes,Route } from 'react-router-dom'
-import {Login, Header, Home, Register, Myshoes} from './index'
+import {Login, Header, Home, Register, Myshoes, Create} from './index'
 
 
 const App = () => {
@@ -26,7 +26,7 @@ const App = () => {
             <Route 
             path='/'
             element={
-                <Home shoes={shoes} setShoes={setShoes}/>
+                <Home shoes={shoes} setShoes={setShoes} isLoggedIn={isLoggedIn}/>
             }/>
             </Routes>
             :
@@ -34,7 +34,7 @@ const App = () => {
                   <Route 
             path='/'
             element={
-                <Home shoes={shoes} setShoes={setShoes}/>
+                <Home shoes={shoes} setShoes={setShoes} isLoggedIn={isLoggedIn}/>
             }/>
             <Route 
             path='/login'
@@ -43,6 +43,9 @@ const App = () => {
             <Route 
             path='/register' 
             element={<Register/>}/>
+            <Route 
+            path='/create' 
+            element={<Create/>}/>
             </Routes>
             }
             

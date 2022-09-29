@@ -1,8 +1,9 @@
 
 import { useEffect, useState } from "react"
+import { NavLink } from "react-router-dom"
 import { getAllTheShoes } from "../api"
-import {Search} from './index'
-const Home = ({shoes, setShoes}) => {
+import {Search, Message} from './index'
+const Home = ({shoes, setShoes, isLoggedIn}) => {
     const [filteredShoes, setFilteredShoes] = useState([])
 
     async function fetchShoes() {
@@ -27,6 +28,10 @@ const Home = ({shoes, setShoes}) => {
                     <p>City: {shoe.city}</p>
                     <p>Description: {shoe.description}</p>
                     <p>Size: {shoe.size}</p>
+                    { isLoggedIn ?
+                    <Message shoeId={shoe.id}/>
+                    : <NavLink to='/create'>Click to Message</NavLink>
+        }
                 </div>
             )
         })
@@ -42,6 +47,12 @@ console.log(shoes, 'ha')
                 <p>City: {shoe.city}</p>
                 <p>Description: {shoe.description}</p>
                 <p>Size: {shoe.size}</p>
+                
+                {isLoggedIn ?
+                <Message shoeId={shoe.id}/>
+                : <NavLink to='/create'>Click to Message</NavLink>
+
+    }
             </div>
         )
     })

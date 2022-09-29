@@ -1,9 +1,11 @@
 const client = require('./client')
 const {createUser} = require('./users')
 const {createShoes} = require('./shoes')
+const {createMessage} = require('./message')
 async function dropTables () {
 try {
     await client.query(`
+    DROP TABLE IF EXISTS message;
     DROP TABLE IF EXISTS shoes;
     DROP TYPE IF EXISTS shoeState;
     DROP TABLE IF EXISTS users;
@@ -31,6 +33,12 @@ async function createTables () {
         state shoeState NOT NULL,
         description TEXT NOT NULL,
         size INTEGER
+    );
+    CREATE TABLE message (
+      id SERIAL PRIMARY KEY,
+      content VARCHAR (400) NOT NULL,
+      "shoeId" INTEGER REFERENCES shoes(id),
+      "fromUser" INTEGER REFERENCES users(id)
     )
     `)
 }
@@ -99,12 +107,31 @@ async function createInitialShoes() {
     console.log("Finished creating shoes");
   }
 
+  async function createInitialMessage () {
+    try {
+        const messageToCreate = [
+          { content: 'Hello I am interested', shoeId: 2, fromUser: 1 },
+          { content: 'I want the shoe', shoeId: 1, fromUser: 2 },
+          { content: 'How much for the shoe?', shoeId: 3, fromUser: 3},
+        ];
+        const messages = await Promise.all(messageToCreate.map(createMessage));
+    
+        console.log("Messages created:");
+        console.log(messages);
+        console.log("Finished creating messages!");
+      } catch (error) {
+        console.error("Error creating messages!");
+        throw error;
+      }
+}
+
 async function rebuildDB() {
     try {
         await dropTables();
         await createTables();
         await createInitialUser();
         await createInitialShoes();
+        await createInitialMessage()
     } catch (error) {
         throw error
     }

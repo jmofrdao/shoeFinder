@@ -1,8 +1,10 @@
+
 import React, {useState, useEffect} from 'react'
-import { getShoesbyUsername, getUsersMe } from '../api'
+import { getShoesbyUsername, getUsersMe, getUserMessage } from '../api'
 
 const Myshoes = () => {
 const [myShoes, setMyShoes] = useState([])
+const [myMessages, setMyMessages] = useState([])
 
 async function fetchMyShoes () {
     const token = localStorage.getItem('token')
@@ -18,27 +20,42 @@ async function fetchMyShoes () {
     }
 }
 
+async function fetchMyMessage () {
+    const token = localStorage.getItem('token')
+    const user = getUsersMe(token)
+    const fromUser = user.id
+const theMessage = await getUserMessage(fromUser)
+console.log(theMessage,'the')
+setMyMessages(theMessage)
+}
+
 useEffect(()=> {
     fetchMyShoes()
+    fetchMyMessage()
 }, [])
 
-console.log(myShoes, 'myt') 
+const username = localStorage.getItem('username')
+
+console.log(myMessages, 'myt') 
 const shoeMap = myShoes.map((shoe, index )=> {
     return (
         <div key={`Sho ${index}`}>
-            <h1>Name: {shoe.name}</h1>
-            <h3>Brand: {shoe.brand}</h3>
-            <h5>State: {shoe.state}</h5>
-            <p>City: {shoe.city}</p>
-            <p>Description: {shoe.description}</p>
-            <p>Size: {shoe.size}</p>
+            <h3>Name: {shoe.name}</h3>
+            <h4>Brand: {shoe.brand}</h4>
+            <h4>State: {shoe.state}</h4>
+            <h4>City: {shoe.city}</h4>
+            <h4>Description: {shoe.description}</h4>
+            <h4>Size: {shoe.size}</h4>
         </div>
     )
 })
 
     return (
         <div>
+            <h1>{username}'s Profile</h1>
+            <h2>My Shoes</h2>
             {shoeMap}
+            <h2>My Messages</h2>
         </div>
     )
 }

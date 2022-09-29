@@ -5,6 +5,7 @@ const {JWT_SECRET} = process.env
 const {getUser, getUserByUsername, createUser} = require('../db/users')
 const {getShoesByUsername} = require('../db/shoes')
 const { requireUser } = require('./utils')
+const { getUserByFromUser } = require('../db/message')
 
 router.post('/register', async(req,res,next)=> {
     const {username, password, secondPass, email} = req.body
@@ -116,6 +117,24 @@ router.get("/me", requireUser, async (req, res, next) => {
       next(error);
     }
   });
+
+  router.get('/:fromUser/message', requireUser, async (req,res,next)=> {
+      const {fromUser } = req.params
+      console.log(fromUser, 'please')
+      try {
+          const user = await getUserByFromUser(fromUser)
+          if (user) {
+              res.send(user)
+          } else {
+              next({
+                  name: 'UserError',
+                  message: 'Must be a user'
+              })
+          }
+      } catch ({name, message}) {
+          next({name, message})
+      }
+  })
 
 
 module.exports = router

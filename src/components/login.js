@@ -1,11 +1,13 @@
 import React, {useState} from 'react'
 import { LoginUser } from '../api'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 const Login = ({setIsLoggedIn}) => {
+    let navigate = useNavigate()
 const [username, setUsername] = useState('')
 const [password, setPassword] = useState('')
 const [error, setError] = useState(null)
 const handleSubmit = async (event) => {
+    
 event.preventDefault()
 const result = await LoginUser(username, password)
 const token = result.token
@@ -18,6 +20,7 @@ if (result.error) {
     localStorage.setItem("username", username)
     localStorage.setItem("token", token)
     setIsLoggedIn(true)
+    navigate('../myshoes')
 }
 
 }
